@@ -1,42 +1,48 @@
-// Dependencies
 var express = require("express");
-var exphbs = require("express-handlebars");
-var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
+var logger = require("morgan");
+var mongoose = require("mongoose");
+var morgan = require("morgan");
+var exphbs = require("express-handlebars");
 
-// Set up port
+
+
+// Require all models
+var db = require("./models");
 var PORT = process.env.PORT || 3000;
 
-// Set up Express App
+// Initialize Express
 var app = express();
 
-// Require routes
+// Require our routes
 var routes = require("./routes");
 
-// Designate our public folder as a static directory
+// Use express.static to serve the public folder as a static directory
 app.use(express.static("public"));
 
-// Connect Handlebars to Express app
+
+// Set Handlebars.
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
-// Use bodyParser
+// Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Have every request go through route middleware
+// Have every request go through our route middleware
 app.use(routes);
 
-// Use the deployed database or local
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://heroku_6fl8jxq4:hastmhkmudanh4j0qnhle710mt@ds123976.mlab.com:23976/heroku_6fl8jxq4";
 
+// Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI, {
+let mongoUrl = process.env.MONGODB_URI || "mongodb://localhost/newscraper"
+mongoose.connect(mongoUrl, {
   useMongoClient: true
 });
 
-// Listen on the port
-app.listen(PORT, function() {
-  console.log("Listening on port: " + PORT);
+app.listen(PORT, function(){
+  console.log("App running on port " + PORT + "!");
 });
+
+
