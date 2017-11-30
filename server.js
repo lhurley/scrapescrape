@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use(routes);
 
 // Use the deployed database or local
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://heroku_7w0wpf68:mpamde4bkka7of440cjp56vn4c@ds111336.mlab.com:11336/heroku_7w0wpf68";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://heroku_6fl8jxq4:hastmhkmudanh4j0qnhle710mt@ds123976.mlab.com:23976/heroku_6fl8jxq4";
 
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
