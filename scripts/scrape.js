@@ -7,7 +7,7 @@ var cheerio = require("cheerio");
 
 var scrape = function(){
   // First, we grab the body of the html with request
-  return axios.get("http://www.cubuffs.com/").then(function(response) {
+  return axios.get("http://www2.kusports.com").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
     var articles = []
@@ -25,9 +25,9 @@ var scrape = function(){
       var url = $(this)
         .children("a")
         .attr("href");
-        url = "http://www.cubuffs.com/" + url
-
-
+        url = "http://www.kusports.com" + url
+      
+    
       if (head && url) {
         // This section uses regular expressions and the trim function to tidy our headlines and summaries
         // We're removing extra lines, extra spacing, extra tabs, etc.. to increase to typographical cleanliness.
@@ -43,7 +43,7 @@ var scrape = function(){
         articles.push(dataToAdd);
       }
     });
-
+    
     return articles;
 
   });
